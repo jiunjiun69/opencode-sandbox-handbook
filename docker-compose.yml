@@ -1,0 +1,13 @@
+services:
+  opencode:
+    image: ghcr.io/anomalyco/opencode:1.14.20
+    container_name: opencode
+    stdin_open: true
+    tty: true
+    volumes:
+      - ${PROJECT_DIR}:/workspace
+      - ./opencode-config:/root/.config/opencode
+    working_dir: /workspace
+    environment:
+      - OPENCODE_CONFIG_DIR=/root/.config/opencode
+      - OPENCODE_CONFIG=/root/.config/opencode/opencode.json

@@ -1,0 +1,24 @@
+# 本機環境設定
+.env
+
+# OpenCode 本機敏感設定 / 真實設定
+opencode-config/llm-key.txt
+opencode-config/opencode.json
+
+# OpenCode 執行時可能產生的檔案
+opencode-config/node_modules/
+opencode-config/package.json
+opencode-config/package-lock.json
+opencode-config/bun.lock
+opencode-config/.opencode/
+opencode-config/*.log
+
+# 作業系統 / 編輯器
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# 暫存檔
+*.tmp
+*.bak
