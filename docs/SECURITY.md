@@ -29,6 +29,7 @@
 .env
 opencode-config/llm-key.txt
 opencode-config/opencode.json
+opencode-data/*
 ```
 
 請使用以下 example 檔案作為公開範本：
@@ -37,6 +38,7 @@ opencode-config/opencode.json
 .env.example
 opencode-config/llm-key.example.txt
 opencode-config/opencode.example.json
+opencode-data/.gitkeep
 ```
 
 ---

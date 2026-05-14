@@ -5,6 +5,10 @@
 opencode-config/llm-key.txt
 opencode-config/opencode.json
 
+# OpenCode Session / 本機資料
+opencode-data/*
+!opencode-data/.gitkeep
+
 # OpenCode 執行時可能產生的檔案
 opencode-config/node_modules/
 opencode-config/package.json
