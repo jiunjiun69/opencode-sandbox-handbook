@@ -31,6 +31,7 @@ OpenAI-compatible LLM Endpoint
 - 不需要把專案搬到 OpenCode 工具資料夾底下。
 - 每次只掛載目前要開發的專案。
 - OpenCode 設定集中管理。
+- OpenCode session 資料保存到本機 `opencode-data/`，重啟容器後仍可保留。
 - 不同專案可以透過 `PROJECT_DIR` 快速切換。
 - API Key 放在本機 ignored 檔案中，不進 Git。
 - 可降低 Agent 誤讀、誤改專案外部資料的風險。
@@ -49,6 +50,8 @@ opencode-sandbox-handbook/
 ├── opencode-config/
 │   ├── opencode.example.json
 │   └── llm-key.example.txt
+├── opencode-data/
+│   └── .gitkeep
 ├── scripts/
 │   ├── run-example-project.sh
 │   └── run-with-project-dir.sh
@@ -172,7 +175,9 @@ docker compose run --rm opencode
 
 而 `/workspace` 會對應到 `.env` 中設定的 `PROJECT_DIR`。
 
-`--rm` 代表離開 TUI 後，自動移除這次產生的一次性 container。
+Compose 也會把本機的 `./opencode-data` 掛載到容器內的 `/root/.local/share/opencode`，用來保留 OpenCode session 等本機執行資料。
+
+`--rm` 代表離開 TUI 後，自動移除這次產生的一次性 container；因為 session 資料已掛載到 `./opencode-data`，移除 container 後仍會保留。
 
 ---
 
