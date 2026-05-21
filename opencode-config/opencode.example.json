@@ -22,6 +22,17 @@
     }
   },
   "model": "internal-llm/YOUR_MODEL_NAME",
+  "mcp": {
+    "playwright-host": {
+      "type": "remote",
+      "url": "http://host.docker.internal:8931/mcp",
+      "enabled": false,
+      "timeout": 10000
+    }
+  },
+  "tools": {
+    "playwright-host_*": false
+  },
   "compaction": {
     "auto": true,
     "prune": true,
@@ -32,6 +43,10 @@
     "bash": "ask",
     "webfetch": "deny",
     "websearch": "deny",
-    "external_directory": "deny"
+    "external_directory": "deny",
+    "skill": {
+      "*": "ask",
+      "frontend-debug": "allow"
+    }
   }
 }

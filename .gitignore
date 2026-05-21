@@ -1,15 +1,15 @@
-# 本機環境設定
+# Local environment
 .env
 
-# OpenCode 本機敏感設定 / 真實設定
+# OpenCode secrets and runtime config
 opencode-config/llm-key.txt
 opencode-config/opencode.json
 
-# OpenCode Session / 本機資料
+# OpenCode sessions and runtime data
 opencode-data/*
 !opencode-data/.gitkeep
 
-# OpenCode 執行時可能產生的檔案
+# OpenCode package/runtime artifacts
 opencode-config/node_modules/
 opencode-config/package.json
 opencode-config/package-lock.json
@@ -17,12 +17,12 @@ opencode-config/bun.lock
 opencode-config/.opencode/
 opencode-config/*.log
 
-# 作業系統 / 編輯器
+# OS and editor files
 .DS_Store
 Thumbs.db
 .vscode/
 .idea/
 
-# 暫存檔
+# Temporary files
 *.tmp
 *.bak
