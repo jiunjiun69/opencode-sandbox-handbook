@@ -1,4 +1,4 @@
-# OpenCode Sandbox 使用手冊
+# OpenCode Sandbox 使用手冊（V1 / V2）
 
 因工作也會用到，因此隨手整理的 OpenCode Sandbox 使用手冊。
 
