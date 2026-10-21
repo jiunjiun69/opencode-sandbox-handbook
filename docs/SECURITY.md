@@ -100,3 +100,12 @@ git diff
 ```
 
 不要讓 Agent 在沒有人工審核的情況下修改正式環境設定、部署憑證、密碼、token 或敏感基礎建設檔案。
+
+---
+
+## V2 與 MCP 公開範例補充
+
+- 請只提交範例設定；真實 `opencode.json`、`*-key.txt`、`.env` 不要提交。
+- 請勿提交真實使用者名稱、內網 IP、DNS domain、專案 slug、憑證或工作資料。
+- OpenProject MCP 預設停用、禁止寫入；啟用前先確認固定專案與最小權限 Token。
+- HTTP 的 Basic Authentication 並非加密；若無法改用 HTTPS，需限制為受信任的內網與指定主機。
