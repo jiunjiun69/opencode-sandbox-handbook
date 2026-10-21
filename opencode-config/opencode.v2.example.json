@@ -87,7 +87,8 @@
           "OPENPROJECT_PROJECT_IDENTIFIER": "example-project",
           "OPENPROJECT_API_KEY": "{file:C:/Users/YOUR_USERNAME/.config/opencode/openproject-key.txt}",
           "OPENPROJECT_ALLOW_HTTP": "false",
-          "OPENPROJECT_ENABLE_WRITES": "false"
+          "OPENPROJECT_ENABLE_WRITES": "false",
+          "OPENPROJECT_HTTP_ALLOWED_HOST": ""
         },
         "disabled": true,
         "codemode": false,
