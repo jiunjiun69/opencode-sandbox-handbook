@@ -1,0 +1,139 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "providers": {
+    "example-llm": {
+      "name": "OpenAI-compatible LLM",
+      "package": "@opencode/ai/providers/openai-compatible",
+      "settings": {
+        "baseURL": "https://llm.example.invalid/v1",
+        "apiKey": "{file:C:/Users/YOUR_USERNAME/.config/opencode/llm-key.txt}"
+      },
+      "models": {
+        "chat-model": {
+          "modelID": "REPLACE_CHAT_MODEL_ID",
+          "name": "Chat model",
+          "limit": {
+            "context": 131072,
+            "output": 8192
+          },
+          "capabilities": {
+            "tools": true,
+            "input": [
+              "text",
+              "image"
+            ],
+            "output": [
+              "text"
+            ]
+          }
+        },
+        "fast-model": {
+          "modelID": "REPLACE_FAST_MODEL_ID",
+          "name": "Fast model",
+          "limit": {
+            "context": 65536,
+            "output": 4096
+          },
+          "capabilities": {
+            "tools": true,
+            "input": [
+              "text"
+            ],
+            "output": [
+              "text"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "model": "example-llm/chat-model",
+  "agents": {
+    "title": {
+      "model": "example-llm/fast-model"
+    }
+  },
+  "compaction": {
+    "auto": true,
+    "buffer": 16384
+  },
+  "mcp": {
+    "servers": {
+      "playwright": {
+        "type": "local",
+        "command": [
+          "npx",
+          "-y",
+          "@playwright/mcp@latest",
+          "--browser=msedge"
+        ],
+        "disabled": true,
+        "codemode": false,
+        "timeout": {
+          "startup": 30000,
+          "catalog": 30000,
+          "execution": 30000
+        }
+      },
+      "openproject": {
+        "type": "local",
+        "command": [
+          "C:/Users/YOUR_USERNAME/.config/opencode/openproject-mcp/.venv/Scripts/python.exe",
+          "-u",
+          "C:/Users/YOUR_USERNAME/.config/opencode/openproject-mcp/server.py"
+        ],
+        "environment": {
+          "OPENPROJECT_URL": "https://openproject.example.invalid",
+          "OPENPROJECT_PROJECT_IDENTIFIER": "example-project",
+          "OPENPROJECT_API_KEY": "{file:C:/Users/YOUR_USERNAME/.config/opencode/openproject-key.txt}",
+          "OPENPROJECT_ALLOW_HTTP": "false",
+          "OPENPROJECT_ENABLE_WRITES": "false"
+        },
+        "disabled": true,
+        "codemode": false,
+        "timeout": {
+          "startup": 30000,
+          "catalog": 30000,
+          "execution": 60000
+        }
+      }
+    }
+  },
+  "permissions": [
+    {
+      "action": "playwright_*",
+      "resource": "*",
+      "effect": "ask"
+    },
+    {
+      "action": "openproject_*",
+      "resource": "*",
+      "effect": "ask"
+    },
+    {
+      "action": "openproject_project_options",
+      "resource": "*",
+      "effect": "allow"
+    },
+    {
+      "action": "openproject_list_work_items",
+      "resource": "*",
+      "effect": "allow"
+    },
+    {
+      "action": "openproject_get_work_item",
+      "resource": "*",
+      "effect": "allow"
+    },
+    {
+      "action": "skill",
+      "resource": "*",
+      "effect": "allow"
+    },
+    {
+      "action": "skill",
+      "resource": "internal-*",
+      "effect": "deny"
+    }
+  ]
+}

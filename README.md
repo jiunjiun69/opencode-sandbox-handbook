@@ -1,5 +1,10 @@
 # OpenCode Sandbox 使用手冊（V1 / V2）
 
+> [V1 Docker 安裝](docs/INSTALL_V1.md) · [V2 Windows 安裝](docs/INSTALL_V2.md) · [V2 JSON 範例](opencode-config/opencode.v2.example.json) · [OpenProject MCP](docs/MCP_OPENPROJECT.md)
+
+> V1 的 Docker Compose 與啟動腳本保持不變。兩版 JSON 格式不同，請勿混用；MCP 預設停用，且範例不包含真實 API Key、IP 或內部網域。
+
+
 因工作也會用到，因此隨手整理的 OpenCode Sandbox 使用手冊。
 
 本專案示範如何在 **WSL + Docker Compose** 中執行 OpenCode，並連接內部或自架的 OpenAI-compatible LLM 服務。  

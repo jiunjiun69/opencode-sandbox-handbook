@@ -17,6 +17,13 @@
             "context": 131072,
             "output": 4096
           }
+        },
+        "EXAMPLE_FAST_MODEL": {
+          "name": "Example fast model",
+          "limit": {
+            "context": 65536,
+            "output": 4096
+          }
         }
       }
     }
@@ -33,5 +40,33 @@
     "webfetch": "deny",
     "websearch": "deny",
     "external_directory": "deny"
+  },
+  "mcp": {
+    "playwright": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@playwright/mcp@latest"
+      ],
+      "enabled": false,
+      "timeout": 30000
+    },
+    "openproject": {
+      "type": "local",
+      "command": [
+        "python3",
+        "-u",
+        "/opt/openproject-mcp/server.py"
+      ],
+      "environment": {
+        "OPENPROJECT_URL": "https://openproject.example.invalid",
+        "OPENPROJECT_PROJECT_IDENTIFIER": "example-project",
+        "OPENPROJECT_API_KEY": "{file:/root/.config/opencode/openproject-key.txt}",
+        "OPENPROJECT_ENABLE_WRITES": "false"
+      },
+      "enabled": false,
+      "timeout": 30000
+    }
   }
 }
