@@ -12,8 +12,12 @@ def settings():
     if not base or not token or not slug:
         raise ValueError("Missing OPENPROJECT_URL, OPENPROJECT_API_KEY or OPENPROJECT_PROJECT_IDENTIFIER")
     parsed = urlsplit(base)
-    if parsed.scheme != "https" or not parsed.hostname or parsed.path or parsed.query or parsed.fragment:
-        raise ValueError("This public example requires an HTTPS OpenProject origin URL")
+    if parsed.scheme not in ("https", "http") or not parsed.hostname or parsed.path or parsed.query or parsed.fragment or parsed.username or parsed.password:
+        raise ValueError("OpenProject URL must be an HTTP(S) origin")
+    if parsed.scheme == "http":
+        allowed_host = os.getenv("OPENPROJECT_HTTP_ALLOWED_HOST", "").strip()
+        if os.getenv("OPENPROJECT_ALLOW_HTTP", "false").lower() != "true" or parsed.hostname != allowed_host or not allowed_host:
+            raise ValueError("HTTP requires OPENPROJECT_ALLOW_HTTP=true and exact OPENPROJECT_HTTP_ALLOWED_HOST")
     if not all(c.isascii() and (c.isalnum() or c == "-") for c in slug):
         raise ValueError("Invalid project identifier")
     return base, token, slug
@@ -27,6 +31,8 @@ def api(method, path, payload=None, params=None):
         r = session.request(method, base+path, auth=("apikey", token),
             headers={"Accept":"application/hal+json","Content-Type":"application/json"},
             json=payload, params=params, timeout=(5,20), allow_redirects=False)
+    if 300 <= r.status_code < 400:
+        raise RuntimeError("Redirect refused: check OpenProject URL")
     if not r.ok:
         raise RuntimeError(f"OpenProject HTTP {r.status_code}; check token, permissions, endpoint, or workflow")
     return r.json()
@@ -87,7 +93,7 @@ def get_work_item(work_item_id:int)->dict:
     return summary(scoped(work_item_id))
 
 @mcp.tool()
-def create_work_item(subject:str,type_id:int,description:str="",apply:bool=False)->dict:
+def create_work_item(subject:str,type_id:int,description:str="",status_id:int=0,apply:bool=False)->dict:
     """Preview or create scoped work item (explicit apply required)."""
     pid=project_id()
     if not subject.strip(): raise ValueError("Subject required")
@@ -95,17 +101,25 @@ def create_work_item(subject:str,type_id:int,description:str="",apply:bool=False
     if type_id not in types: raise ValueError("Invalid project type")
     payload={"subject":subject.strip(),"description":{"format":"markdown","raw":description},
              "_links":{"type":{"href":f"/api/v3/types/{type_id}"}}}
+    if status_id:
+        statuses=[x["id"] for x in rows(api("GET","/api/v3/statuses"))]
+        if status_id not in statuses: raise ValueError("Unknown status")
+        payload["_links"]["status"]={"href":f"/api/v3/statuses/{status_id}"}
     if not apply: return {"mode":"preview","project_id":pid,"payload":payload}
     allow_write()
     return {"mode":"created","item":summary(api("POST",f"/api/v3/projects/{pid}/work_packages",payload))}
 
 @mcp.tool()
-def update_work_item(work_item_id:int,subject:str="",description:str="",apply:bool=False)->dict:
+def update_work_item(work_item_id:int,subject:str="",description:str="",status_id:int=0,apply:bool=False)->dict:
     """Preview or update scoped work item with optimistic locking."""
     item=scoped(work_item_id)
     payload={"lockVersion":item["lockVersion"]}
     if subject.strip(): payload["subject"]=subject.strip()
     if description.strip(): payload["description"]={"format":"markdown","raw":description}
+    if status_id:
+        statuses=[x["id"] for x in rows(api("GET","/api/v3/statuses"))]
+        if status_id not in statuses: raise ValueError("Unknown status")
+        payload["_links"]={"status":{"href":f"/api/v3/statuses/{status_id}"}}
     if len(payload)==1: raise ValueError("No changes requested")
     if not apply: return {"mode":"preview","current":summary(item),"changes":payload}
     allow_write()
