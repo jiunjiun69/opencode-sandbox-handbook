@@ -15,7 +15,7 @@ py -3 -m venv "$base\.venv"
 
 - `project_options`、`list_work_items`、`get_work_item`：唯讀。
 - `create_work_item`、`update_work_item`：預設 `apply=false` 預覽；必須 `apply=true` 且 `OPENPROJECT_ENABLE_WRITES=true` 才寫入。
-- HTTP：預設只接受 HTTPS；不建議用 HTTP 傳 Token。若不得已使用 HTTP，需要額外做特定內網主機白名單與風險審查；本公開範例預設禁止 HTTP。
+- HTTP：預設僅允許 HTTPS。內網若不得已使用 HTTP，必須同時設定 `OPENPROJECT_ALLOW_HTTP=true` 與 `OPENPROJECT_HTTP_ALLOWED_HOST=example.internal`（與 URL hostname 完全一致）。HTTP 的 Token 傳輸沒有加密，應優先改為 HTTPS，並限制網段／權限。
 - 使用最小權限專用 Token，並保持 OpenCode 寫入工具 `ask` 權限。
 
 ## 測試順序
