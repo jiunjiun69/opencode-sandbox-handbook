@@ -1,0 +1,40 @@
+name: Session converter tests
+
+on:
+  pull_request:
+    paths:
+      - "tools/session-converter/**"
+      - ".github/workflows/session-converter-tests.yml"
+  push:
+    branches: [main]
+    paths:
+      - "tools/session-converter/**"
+      - ".github/workflows/session-converter-tests.yml"
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run synthetic session conversion tests
+        run: python -m unittest discover -s tools/session-converter -p 'test_*.py' -v
+      - name: Scan for forbidden machine-specific examples
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          scan = [Path("tools/session-converter"), Path("docs"), Path("scripts"), Path("README.md"), Path(".env.example"), Path("opencode-config")]
+          patterns = [r"K\d{5}", r"(?<![A-Za-z])[A-Za-z]:[\\/]", r"/mnt/[a-z]\b"]
+          for root in scan:
+              paths = [root] if root.is_file() else [p for p in root.rglob("*") if p.is_file()]
+              for file in paths:
+                  if file.suffix not in (".py", ".md", ".sh", ".json", ".example") and file.name != ".env.example":
+                      continue
+                  text = file.read_text(encoding="utf-8")
+                  for pattern in patterns:
+                      if re.search(pattern, text):
+                          raise SystemExit(f"Forbidden path/identifier pattern in {file}")
+          PY

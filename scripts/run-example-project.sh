@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # 請將此路徑改成你的 WSL 專案路徑。
-export PROJECT_DIR="/mnt/d/path/to/your/project"
+export PROJECT_DIR="/home/example/workspace/sample-project"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
