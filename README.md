@@ -1,6 +1,6 @@
 # OpenCode Sandbox 使用手冊（V1 / V2）
 
-> [V1 Docker 安裝](docs/INSTALL_V1.md) · [V2 Windows 安裝](docs/INSTALL_V2.md) · [V2 JSON 範例](opencode-config/opencode.v2.example.json) · [OpenProject MCP](docs/MCP_OPENPROJECT.md) · [V1 → V2 對話轉換](tools/session-converter/README.md)
+> [V1 Docker 安裝](docs/INSTALL_V1.md) · [V2 Windows 安裝](docs/INSTALL_V2.md) · [V2 JSON 範例](opencode-config/opencode.v2.example.json) · [OpenProject MCP](docs/MCP_OPENPROJECT.md)
 
 > V1 的 Docker Compose 與啟動腳本保持不變。兩版 JSON 格式不同，請勿混用；MCP 預設停用，且範例不包含真實 API Key、IP 或內部網域。
 
@@ -116,13 +116,19 @@ nano .env
 範例：
 
 ```env
-PROJECT_DIR=/home/example/workspace/sample-project
+PROJECT_DIR=/mnt/d/path/to/your/project
 ```
 
-在 WSL 中進入專案目錄，執行 `pwd` 取得路徑。以下為虛構範例：
+Windows 路徑：
 
 ```text
-/home/example/workspace/sample-project
+D:\path\to\your\project
+```
+
+對應到 WSL 會是：
+
+```text
+/mnt/d/path/to/your/project
 ```
 
 ---
@@ -185,7 +191,7 @@ Compose 也會把本機的 `./opencode-data` 掛載到容器內的 `/root/.local
 修改 `.env`：
 
 ```env
-PROJECT_DIR=/home/example/workspace/another-project
+PROJECT_DIR=/mnt/d/path/to/another/project
 ```
 
 然後重新執行：
@@ -197,7 +203,7 @@ docker compose run --rm opencode
 也可以啟動時直接帶入：
 
 ```bash
-PROJECT_DIR="/home/example/workspace/another-project" docker compose run --rm opencode
+PROJECT_DIR="/mnt/d/path/to/another/project" docker compose run --rm opencode
 ```
 
 ---
@@ -225,7 +231,7 @@ chmod +x scripts/run-example-project.sh
 
 ```bash
 chmod +x scripts/run-with-project-dir.sh
-./scripts/run-with-project-dir.sh /home/example/workspace/sample-project
+./scripts/run-with-project-dir.sh /mnt/d/path/to/your/project
 ```
 
 ---
@@ -274,9 +280,3 @@ docker compose run --rm opencode
 ```powershell
 wsl bash -lc "cd ~/OpenCodeSandbox && docker compose run --rm opencode"
 ```
-
----
-
-## V1 → V2 Session JSON 轉換
-
-收到別人從 V1 匯出的 Session JSON，可使用 [離線格式轉換工具](tools/session-converter/README.md) 轉換後再手動匯入 V2。轉換不會匿名化對話，請勿公開真實 JSON。

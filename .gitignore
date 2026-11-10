@@ -26,3 +26,10 @@ Thumbs.db
 # 暫存檔
 *.tmp
 *.bak
+
+# Session 轉換器：避免誤提交真實對話資料
+/input/
+/output/
+*.v2.json
+**/__pycache__/
+*.pyc

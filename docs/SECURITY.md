@@ -57,8 +57,7 @@ OpenCode 這類 Coding Agent 可以讀檔、改檔，也可能要求執行 shell
 請避免掛載過大的主機路徑，例如：
 
 ```text
-/mnt/c/Users
-/mnt/d
+/home
 /
 ```
 

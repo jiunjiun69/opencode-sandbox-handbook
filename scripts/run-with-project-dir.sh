@@ -2,7 +2,7 @@
 set -euo pipefail
 
 if [ "$#" -ne 1 ]; then
-  echo "用法：$0 /mnt/d/path/to/your/project"
+  echo "用法：$0 /home/example/workspace/sample-project"
   exit 1
 fi
 

@@ -6,7 +6,7 @@
       "package": "@opencode/ai/providers/openai-compatible",
       "settings": {
         "baseURL": "https://llm.example.invalid/v1",
-        "apiKey": "{file:REPLACE_WITH_LOCAL_LLM_KEY_FILE}"
+        "apiKey": "{file:C:/Users/YOUR_USERNAME/.config/opencode/llm-key.txt}"
       },
       "models": {
         "chat-model": {
@@ -78,14 +78,14 @@
       "openproject": {
         "type": "local",
         "command": [
-          "REPLACE_WITH_PYTHON_EXECUTABLE",
+          "C:/Users/YOUR_USERNAME/.config/opencode/openproject-mcp/.venv/Scripts/python.exe",
           "-u",
-          "REPLACE_WITH_MCP_SERVER_SCRIPT"
+          "C:/Users/YOUR_USERNAME/.config/opencode/openproject-mcp/server.py"
         ],
         "environment": {
           "OPENPROJECT_URL": "https://openproject.example.invalid",
           "OPENPROJECT_PROJECT_IDENTIFIER": "example-project",
-          "OPENPROJECT_API_KEY": "{file:REPLACE_WITH_LOCAL_MCP_KEY_FILE}",
+          "OPENPROJECT_API_KEY": "{file:C:/Users/YOUR_USERNAME/.config/opencode/openproject-key.txt}",
           "OPENPROJECT_ALLOW_HTTP": "false",
           "OPENPROJECT_ENABLE_WRITES": "false",
           "OPENPROJECT_HTTP_ALLOWED_HOST": ""
