@@ -24,14 +24,10 @@ cat .env
 確認 `PROJECT_DIR` 是 WSL 路徑格式：
 
 ```text
-/mnt/d/path/to/your/project
+/home/example/workspace/sample-project
 ```
 
-不要寫成 Windows 路徑格式：
-
-```text
-D:\path\to\your\project
-```
+請勿直接填入 Windows 檔案總管顯示的實體磁碟路徑；請進入 WSL 的專案目錄並執行 `pwd` 取得路徑。
 
 ---
 
